@@ -2,6 +2,8 @@ package com.locadora.cine.models;
 
 import java.time.LocalDateTime;
 
+import com.locadora.cine.dtos.FilmeDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,5 +22,13 @@ public class Filme {
     private LocalDateTime anoLancamento;
 
     private String genero;
-    
+
+    public FilmeDto filmeToDTO() {
+        return FilmeDto.builder()
+                .titulo(titulo)
+                .anoLancamento(anoLancamento)
+                .genero(genero)
+                .build();
+    }
+
 }

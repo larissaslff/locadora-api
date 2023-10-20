@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import com.locadora.cine.dtos.AluguelDTO;
+import com.locadora.cine.dtos.ClienteDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,4 +35,12 @@ public class Aluguel {
 
     @OneToMany
     private Set<Filme> filmes;
+
+    public AluguelDTO toDTO() {
+        return AluguelDTO.builder()
+                .dataAlugel(dataAlugel)
+                .dataDevolucao(dataDevolucao)
+                .cliente(ClienteDto.builder().build())
+                .build();
+    }
 }
