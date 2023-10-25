@@ -51,6 +51,9 @@ public class ClienteControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.nome").value(cliente.getNome()))
                 .andExpect(jsonPath("$.sobrenome").value(cliente.getSobrenome()))
+                .andExpect(jsonPath("$.endereco").value(cliente.getEndereco()))
+                .andExpect(jsonPath("$.telefone").value(cliente.getTelefone()))
+                .andExpect(jsonPath("$.alugueis").value(cliente.getAlugueis()))
                 .andReturn();
     }
 }
