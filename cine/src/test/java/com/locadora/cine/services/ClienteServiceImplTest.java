@@ -95,7 +95,7 @@ public class ClienteServiceImplTest {
         }
 
     @Test
-    void deveRetornarClienteQuandoExistentePorId(){
+    void deveRetornarClienteQuandoExistentePorId() {
         when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
 
         ResponseEntity<Cliente> clienteEncontrado = clienteService.buscarClientePorId(1L);
@@ -106,7 +106,7 @@ public class ClienteServiceImplTest {
     }
 
     @Test
-    void nãoDeveRetornarClienteQuandoInexisteId(){
+    void nãoDeveRetornarClienteQuandoInexisteId() {
         when(clienteRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         ResponseEntity<Cliente> clienteEncontrado = clienteService.buscarClientePorId(100L);
@@ -127,12 +127,27 @@ public class ClienteServiceImplTest {
                 when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
                 when(clienteRepository.save(any(Cliente.class))).thenReturn(clienteAtualizado);
 
-
                 ResponseEntity<Cliente> clienteResposta = clienteService.atualizarCliente(1L, clienteAtualizado);
 
                 assertThat(clienteResposta.getStatusCode()).isEqualTo(HttpStatus.OK);
                 assertThat(clienteResposta.getBody().getId()).isEqualTo(clienteAtualizado.getId());
                 assertThat(clienteResposta.getBody().getNome()).isEqualTo(clienteAtualizado.getNome());
+        }
 
+        @Test
+        void nãoDeveAtualizarClienteInexistente() {
+                Cliente clienteAtualizado = cliente = Cliente.builder()
+                                .id(100L)
+                                .nome("Cliente Atualizado 01")
+                                .sobrenome("Cliente Atualizado 01")
+                                .telefone("telefone")
+                                .endereco("endereco")
+                                .build();
+
+                when(clienteRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+                ResponseEntity<Cliente> clienteResposta = clienteService.atualizarCliente(100L, clienteAtualizado);
+
+                assertThat(clienteResposta.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
 }

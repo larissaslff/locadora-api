@@ -108,4 +108,13 @@ public class ClienteControllerTest {
         .andExpect(jsonPath("$.id").value(cliente.getId()))
         .andExpect(jsonPath("$.nome").value(cliente.getNome()));
     }
+
+    @Test
+    void naoDeveEncontrarUmClientePorNaoExistir() throws Exception {
+
+        when(clienteService.buscarClientePorId(anyLong())).thenReturn(ResponseEntity.notFound().build());
+
+        mockMvc.perform(get(V1_CLIENTES+"/100"))
+        .andExpect(status().isNotFound());
+    }
 }

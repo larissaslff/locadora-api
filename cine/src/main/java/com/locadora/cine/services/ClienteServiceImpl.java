@@ -49,7 +49,7 @@ public class ClienteServiceImpl implements ClienteService {
             return ResponseEntity.ok(clienteSalvoAtualizado);
         }
 
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
 }
