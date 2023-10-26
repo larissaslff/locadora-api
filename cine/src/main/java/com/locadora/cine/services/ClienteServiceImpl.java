@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,10 @@ public class ClienteServiceImpl implements ClienteService {
     public ResponseEntity<List<Cliente>> buscarClientes() {
         List<Cliente> todosClientes = clienteRepository.findAll();
         return ResponseEntity.ok(todosClientes);
+    }
+
+    public Object buscarPorId(long anyLong) {
+        return null;
     }
 
     

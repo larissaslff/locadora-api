@@ -1,6 +1,6 @@
 package com.locadora.cine.controllers;
 
-import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.locadora.cine.models.Cliente;
@@ -97,5 +95,15 @@ public class ClienteControllerTest {
                 .andExpect(jsonPath("$[0].telefone").value(cliente.getTelefone()))
                 .andExpect(jsonPath("$[1].nome").value(cliente02.getNome()))
                 .andExpect(jsonPath("$[1].telefone").value(cliente02.getTelefone()));
+    }
+
+    @Test
+    void deveEncontrarUmClientePorId() throws Exception {
+
+        when(clienteService.buscarPorId(anyLong())).thenReturn(cliente);
+
+        mockMvc.perform(get(V1_CLIENTES+"/1"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$").value(cliente));
     }
 }
