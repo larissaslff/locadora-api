@@ -43,6 +43,6 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Cliente>atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
-        return null;
+        return clienteService.atualizarCliente(id, clienteAtualizado);
     }
 }

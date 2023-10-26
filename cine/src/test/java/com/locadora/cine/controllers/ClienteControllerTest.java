@@ -1,5 +1,6 @@
 package com.locadora.cine.controllers;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -128,6 +129,8 @@ public class ClienteControllerTest {
                 .endereco("Endereço")
                 .build();
 
+        when(clienteService.atualizarCliente(anyLong(), any(Cliente.class))).thenReturn(ResponseEntity.ok(clienteAtualizado));
+        
         mockMvc.perform(put(V1_CLIENTES + "/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(clienteAtualizado)))
