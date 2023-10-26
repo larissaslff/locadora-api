@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -116,5 +117,22 @@ public class ClienteControllerTest {
 
         mockMvc.perform(get(V1_CLIENTES+"/100"))
         .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deveAtualizarCliente() throws Exception {
+        Cliente clienteAtualizado = Cliente.builder()
+                .id(1L)
+                .nome("Nome Atual")
+                .sobrenome("Sobrenome Atual")
+                .endereco("Endereço")
+                .build();
+
+        mockMvc.perform(put(V1_CLIENTES + "/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(clienteAtualizado)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(clienteAtualizado.getId()))
+                .andExpect(jsonPath("$.nome").value(clienteAtualizado.getNome()));
     }
 }
