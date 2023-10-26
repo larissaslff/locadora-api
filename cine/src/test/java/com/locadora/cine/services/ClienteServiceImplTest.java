@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,8 +31,10 @@ public class ClienteServiceImplTest {
 
         private static Cliente cliente;
 
+        @BeforeAll
         static void setUp() {
                 cliente = Cliente.builder()
+                                .id(1L)
                                 .nome("Cliente 01")
                                 .sobrenome("Cliente 01")
                                 .telefone("telefone")
@@ -96,5 +100,7 @@ public class ClienteServiceImplTest {
         ResponseEntity<Cliente> clienteEncontrado = clienteService.buscarClientePorId(1L);
 
         assertThat(clienteEncontrado.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(clienteEncontrado.getBody().getId()).isEqualTo(cliente.getId());
+        assertThat(clienteEncontrado.getBody().getNome()).isEqualTo(cliente.getNome());
     }
 }

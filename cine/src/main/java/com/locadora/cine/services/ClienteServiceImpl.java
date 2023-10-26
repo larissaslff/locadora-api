@@ -1,6 +1,7 @@
 package com.locadora.cine.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,12 +29,14 @@ public class ClienteServiceImpl implements ClienteService {
         return ResponseEntity.ok(todosClientes);
     }
 
-
     @Override
     public ResponseEntity<Cliente> buscarClientePorId(Long id) {
-        return null;
+        Optional<Cliente> cliente = clienteRepository.findById(id);
+
+        if (cliente.isPresent()) {
+            return ResponseEntity.ok(cliente.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    
-    
 }
