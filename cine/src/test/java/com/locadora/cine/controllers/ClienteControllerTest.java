@@ -49,6 +49,7 @@ public class ClienteControllerTest {
     @BeforeAll
     static void setUp() {
         cliente = Cliente.builder()
+                .id(1L)
                 .nome("Nome")
                 .sobrenome("Sobrenome")
                 .endereco("Endereço")
@@ -100,10 +101,11 @@ public class ClienteControllerTest {
     @Test
     void deveEncontrarUmClientePorId() throws Exception {
 
-        when(clienteService.buscarPorId(anyLong())).thenReturn(cliente);
+        when(clienteService.buscarClientePorId(anyLong())).thenReturn(ResponseEntity.ok(cliente));
 
         mockMvc.perform(get(V1_CLIENTES+"/1"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$").value(cliente));
+        .andExpect(jsonPath("$.id").value(cliente.getId()))
+        .andExpect(jsonPath("$.nome").value(cliente.getNome()));
     }
 }

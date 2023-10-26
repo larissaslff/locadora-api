@@ -28,7 +28,9 @@ public class ClienteServiceImpl implements ClienteService {
         return ResponseEntity.ok(todosClientes);
     }
 
-    public Object buscarPorId(long anyLong) {
+
+    @Override
+    public ResponseEntity<Cliente> buscarClientePorId(Long id) {
         return null;
     }
 

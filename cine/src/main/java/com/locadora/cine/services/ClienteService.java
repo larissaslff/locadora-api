@@ -11,4 +11,6 @@ public interface ClienteService {
     ResponseEntity<Cliente> save(Cliente cliente);
 
     ResponseEntity<List<Cliente>> buscarClientes();
+
+    ResponseEntity<Cliente> buscarClientePorId(Long id);
 }

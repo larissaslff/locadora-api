@@ -36,7 +36,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<Cliente>> buscarClientePorId(@PathVariable Long id) {
+    public ResponseEntity<Cliente> buscarClientePorId(@PathVariable Long id) {
         return clienteService.buscarClientePorId(id);
     }
 }
