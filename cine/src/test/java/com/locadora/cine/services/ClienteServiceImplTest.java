@@ -103,4 +103,28 @@ public class ClienteServiceImplTest {
         assertThat(clienteEncontrado.getBody().getId()).isEqualTo(cliente.getId());
         assertThat(clienteEncontrado.getBody().getNome()).isEqualTo(cliente.getNome());
     }
+
+    @Test
+    void nãoDeveRetornarClienteQuandoInexisteId(){
+        when(clienteRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        ResponseEntity<Cliente> clienteEncontrado = clienteService.buscarClientePorId(100L);
+
+        assertThat(clienteEncontrado.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+        @Test
+        void deveAtualizarClienteExistente() {
+                Cliente clienteAtualizado = cliente = Cliente.builder()
+                                .id(1L)
+                                .nome("Cliente Atualizado 01")
+                                .sobrenome("Cliente Atualizado 01")
+                                .telefone("telefone")
+                                .endereco("endereco")
+                                .build();
+        
+        ResponseEntity<Cliente> clienteResposta = clienteService.atualizarCliente(1L, clienteAtualizado);
+
+        assertThat(clienteResposta.getStatusCode()).isEqualTo(HttpStatus.OK);
+        }
 }

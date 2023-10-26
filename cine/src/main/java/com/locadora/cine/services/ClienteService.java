@@ -13,4 +13,6 @@ public interface ClienteService {
     ResponseEntity<List<Cliente>> buscarClientes();
 
     ResponseEntity<Cliente> buscarClientePorId(Long id);
+
+    ResponseEntity<Cliente> atualizarCliente(Long id, Cliente cliente);
 }

@@ -39,4 +39,9 @@ public class ClienteServiceImpl implements ClienteService {
         return ResponseEntity.notFound().build();
     }
 
+    @Override
+    public ResponseEntity<Cliente> atualizarCliente(Long id, Cliente clienteAtualizado) {
+        return null;
+    }
+
 }
