@@ -1,5 +1,6 @@
 package com.locadora.cine.services;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -122,9 +123,16 @@ public class ClienteServiceImplTest {
                                 .telefone("telefone")
                                 .endereco("endereco")
                                 .build();
-        
-        ResponseEntity<Cliente> clienteResposta = clienteService.atualizarCliente(1L, clienteAtualizado);
 
-        assertThat(clienteResposta.getStatusCode()).isEqualTo(HttpStatus.OK);
+                when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
+                when(clienteRepository.save(any(Cliente.class))).thenReturn(clienteAtualizado);
+
+
+                ResponseEntity<Cliente> clienteResposta = clienteService.atualizarCliente(1L, clienteAtualizado);
+
+                assertThat(clienteResposta.getStatusCode()).isEqualTo(HttpStatus.OK);
+                assertThat(clienteResposta.getBody().getId()).isEqualTo(clienteAtualizado.getId());
+                assertThat(clienteResposta.getBody().getNome()).isEqualTo(clienteAtualizado.getNome());
+
         }
 }

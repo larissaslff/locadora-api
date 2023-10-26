@@ -31,16 +31,24 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ResponseEntity<Cliente> buscarClientePorId(Long id) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
+        Optional<Cliente> clienteBuscado = clienteRepository.findById(id);
 
-        if (cliente.isPresent()) {
-            return ResponseEntity.ok(cliente.get());
+        if (clienteBuscado.isPresent()) {
+            return ResponseEntity.ok(clienteBuscado.get());
         }
         return ResponseEntity.notFound().build();
     }
 
     @Override
     public ResponseEntity<Cliente> atualizarCliente(Long id, Cliente clienteAtualizado) {
+        Optional<Cliente> clienteBuscado = clienteRepository.findById(id);
+
+        if (clienteBuscado.isPresent()) {
+            clienteAtualizado.setId(id);
+            Cliente clienteSalvoAtualizado = clienteRepository.save(clienteAtualizado);
+            return ResponseEntity.ok(clienteSalvoAtualizado);
+        }
+
         return null;
     }
 
