@@ -150,4 +150,12 @@ public class ClienteServiceImplTest {
 
                 assertThat(clienteResposta.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
+
+        @Test
+        void deveDeletarClienteExistente(){
+                
+                ResponseEntity<Void> clienteDeletado = clienteService.deletarCliente(1L);
+
+                assertThat(clienteDeletado.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        }
 }

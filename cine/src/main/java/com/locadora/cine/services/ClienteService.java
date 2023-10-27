@@ -15,4 +15,6 @@ public interface ClienteService {
     ResponseEntity<Cliente> buscarClientePorId(Long id);
 
     ResponseEntity<Cliente> atualizarCliente(Long id, Cliente cliente);
+
+    ResponseEntity<Void> deletarCliente(Long id);
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +51,17 @@ public class ClienteServiceImpl implements ClienteService {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> deletarCliente(Long id) {
+        Optional<Cliente> clienteBuscado = clienteRepository.findById(id);
+
+        if (clienteBuscado.isPresent()) {
+            clienteRepository.deleteById(id);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        }
+        return null;
     }
 
 }
