@@ -171,7 +171,7 @@ public class ClienteServiceImplTest {
 
                 ResponseEntity<Void> clienteDeletado = clienteService.deletarCliente(100L);
 
-                assertThat(clienteDeletado.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+                assertThat(clienteDeletado.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
                 verify(clienteRepository, times(0)).deleteById(100L);
         }
 }

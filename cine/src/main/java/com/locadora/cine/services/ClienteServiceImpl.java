@@ -61,7 +61,7 @@ public class ClienteServiceImpl implements ClienteService {
             clienteRepository.deleteById(id);
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
 }
