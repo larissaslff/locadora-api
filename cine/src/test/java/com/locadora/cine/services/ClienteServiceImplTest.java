@@ -2,6 +2,8 @@ package com.locadora.cine.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -152,10 +154,13 @@ public class ClienteServiceImplTest {
         }
 
         @Test
-        void deveDeletarClienteExistente(){
-                
+        void deveDeletarClienteExistente() {
+
+                when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
+
                 ResponseEntity<Void> clienteDeletado = clienteService.deletarCliente(1L);
 
                 assertThat(clienteDeletado.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+                verify(clienteRepository, times(1)).deleteById(1L);
         }
 }
