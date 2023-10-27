@@ -163,4 +163,15 @@ public class ClienteServiceImplTest {
                 assertThat(clienteDeletado.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
                 verify(clienteRepository, times(1)).deleteById(1L);
         }
+
+         @Test
+        void naoDeveDeletarClienteInexistente() {
+
+                when(clienteRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+                ResponseEntity<Void> clienteDeletado = clienteService.deletarCliente(100L);
+
+                assertThat(clienteDeletado.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+                verify(clienteRepository, times(0)).deleteById(100L);
+        }
 }
