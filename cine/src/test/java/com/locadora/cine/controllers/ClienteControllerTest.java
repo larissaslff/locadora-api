@@ -138,4 +138,22 @@ public class ClienteControllerTest {
                 .andExpect(jsonPath("$.id").value(clienteAtualizado.getId()))
                 .andExpect(jsonPath("$.nome").value(clienteAtualizado.getNome()));
     }
+
+    @Test
+    void naoDeveAtualizarClientePorqueNaoExiste() throws Exception {
+        Cliente clienteAtualizado = Cliente.builder()
+                .id(100L)
+                .nome("Nome Atual")
+                .sobrenome("Sobrenome Atual")
+                .endereco("Endereço")
+                .build();
+
+        when(clienteService.atualizarCliente(anyLong(), any(Cliente.class))).thenReturn(ResponseEntity.notFound().build());
+        
+        mockMvc.perform(put(V1_CLIENTES + "/100")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(clienteAtualizado)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.nome").doesNotExist());
+    }
 }
