@@ -165,7 +165,7 @@ public class ClienteControllerTest {
         
         mockMvc.perform(delete(V1_CLIENTES + "/100")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isNoContent())
                 .andExpect(jsonPath("$.nome").doesNotExist());
     }
 }
