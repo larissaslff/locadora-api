@@ -1,6 +1,5 @@
 package com.locadora.cine.controllers;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,7 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente) {
-    
         ResponseEntity<Cliente> clienteSalvo = clienteService.save(cliente);
-
         return clienteSalvo;
     }
 
@@ -43,12 +40,12 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente>atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
         return clienteService.atualizarCliente(id, clienteAtualizado);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void>deletarCliente(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
         return clienteService.deletarCliente(id);
     }
 }
