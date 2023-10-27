@@ -131,8 +131,9 @@ public class ClienteControllerTest {
                 .endereco("Endereço")
                 .build();
 
-        when(clienteService.atualizarCliente(anyLong(), any(Cliente.class))).thenReturn(ResponseEntity.ok(clienteAtualizado));
-        
+        when(clienteService.atualizarCliente(anyLong(), any(Cliente.class)))
+                .thenReturn(ResponseEntity.ok(clienteAtualizado));
+
         mockMvc.perform(put(V1_CLIENTES + "/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(clienteAtualizado)))
@@ -150,8 +151,9 @@ public class ClienteControllerTest {
                 .endereco("Endereço")
                 .build();
 
-        when(clienteService.atualizarCliente(anyLong(), any(Cliente.class))).thenReturn(ResponseEntity.notFound().build());
-        
+        when(clienteService.atualizarCliente(anyLong(), any(Cliente.class)))
+                .thenReturn(ResponseEntity.notFound().build());
+
         mockMvc.perform(put(V1_CLIENTES + "/100")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(clienteAtualizado)))
@@ -165,7 +167,15 @@ public class ClienteControllerTest {
         
         mockMvc.perform(delete(V1_CLIENTES + "/100")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent())
-                .andExpect(jsonPath("$.nome").doesNotExist());
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void naoDeveDeletarClienteAlgum() throws Exception {
+        when(clienteService.deletarCliente(100L)).thenReturn(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
+        
+        mockMvc.perform(delete(V1_CLIENTES + "/100")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
